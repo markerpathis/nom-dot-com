@@ -1,1 +1,3 @@
 # nom-dot-com
+
+this app is in progress...
