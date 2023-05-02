@@ -11,12 +11,16 @@ export default function Header() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-          <Nav.Link href="/">Home</Nav.Link>
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
           <NavDropdown title="Lists" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/recipelist">Recipe List</NavDropdown.Item>
-            <NavDropdown.Item href="/shoppinglist">Shopping List</NavDropdown.Item>
+            <NavDropdown.Item href="/#/recipelist">Recipe List</NavDropdown.Item>
+            <NavDropdown.Item href="/#/shoppinglist">Shopping List</NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link href="/login">Login</Nav.Link>
+          <Link to="/login" className="nav-link">
+            Login
+          </Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
