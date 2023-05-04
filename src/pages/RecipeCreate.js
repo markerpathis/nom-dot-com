@@ -7,10 +7,17 @@ import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";
 
 export default function RecipeCreate() {
-  //   const [recipe, setRecipe] = useState("");
+  const [recipeName, setRecipeName] = useState("");
+  console.log(recipeName);
 
   const [ingredientList, setIngredientList] = useState([{ ingredientName: "", quantity: "", unit: "" }]);
   console.log(ingredientList);
+
+  const handleRecipeNameChange = (event) => {
+    const { target } = event;
+    const inputValue = target.value;
+    setRecipeName(inputValue);
+  };
 
   const handleIngredientAdd = () => {
     setIngredientList([...ingredientList, { ingredientName: "", quantity: "", unit: "" }]);
@@ -29,6 +36,12 @@ export default function RecipeCreate() {
     setIngredientList(list);
   };
 
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    let recipe = { recipeName, ingredientList };
+    console.log(recipe);
+  };
+
   return (
     <>
       <h2>Add A Recipe</h2>
@@ -36,7 +49,7 @@ export default function RecipeCreate() {
         <Row className="align-items-center">
           <Col sm={3} className="my-1">
             <Form.Label>Recipe Name</Form.Label>
-            <Form.Control placeholder="Recipe Name" />
+            <Form.Control placeholder="Recipe Name" value={recipeName || ""} onChange={handleRecipeNameChange} />
           </Col>
         </Row>
       </Form>
@@ -79,7 +92,9 @@ export default function RecipeCreate() {
 
       <Row>
         <Col className="my-1">
-          <Button type="submit">Save Recipe</Button>
+          <Button type="submit" onClick={handleFormSubmit}>
+            Save Recipe
+          </Button>
         </Col>
       </Row>
     </>
