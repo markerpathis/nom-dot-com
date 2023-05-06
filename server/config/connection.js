@@ -1,6 +1,6 @@
 const { connect, connection } = require("mongoose");
 
-mongoose.connect("mongodb://127.0.0.1:27017/nomdotcomDB", {
+connect("mongodb://localhost/nomdotcomDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
