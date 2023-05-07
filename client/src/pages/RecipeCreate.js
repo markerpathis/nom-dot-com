@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";
+import axios from "axios";
 
 export default function RecipeCreate() {
   const [recipeName, setRecipeName] = useState("");
@@ -36,10 +37,14 @@ export default function RecipeCreate() {
     setIngredientList(list);
   };
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    let recipe = { recipeName, ingredientList };
-    console.log(recipe);
+  const postRecipe = (event) => {
+    axios
+      .post("http://localhost:3001/api/recipes", {
+        recipeName: recipeName,
+        ingredients: ingredientList,
+      })
+      .then((res) => console.log("Posting data", res))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -92,7 +97,7 @@ export default function RecipeCreate() {
 
       <Row>
         <Col className="my-1">
-          <Button type="submit" onClick={handleFormSubmit}>
+          <Button type="submit" onClick={postRecipe}>
             Save Recipe
           </Button>
         </Col>
