@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
 
 export default function RecipeList() {
   const [recipeList, setRecipeList] = useState([]);
@@ -23,19 +24,30 @@ export default function RecipeList() {
   }, []);
 
   const populateRecipeData = () => {
-    return recipeList.map((recipe, index) => {
-      return (
-        <tr key={index}>
-          <td>{recipe.recipeName}</td>
-        </tr>
-      );
-    });
+    return recipeList
+      .filter((searchInput) => {
+        return search === "" ? searchInput : searchInput.recipeName.toLowerCase().includes(search.toLocaleLowerCase());
+      })
+      .map((recipe, index) => {
+        return (
+          <tr key={index}>
+            <td>{recipe.recipeName}</td>
+          </tr>
+        );
+      });
   };
+
+  const [search, setSearch] = useState("");
 
   return (
     <>
       <h2>Recipe List</h2>
       <Container>
+        <Form>
+          <Form.Group>
+            <Form.Control onChange={(event) => setSearch(event.target.value)} type="text" placeholder="Search for a recipe" />
+          </Form.Group>
+        </Form>
         <Table striped bordered hover>
           <thead>
             <tr>
