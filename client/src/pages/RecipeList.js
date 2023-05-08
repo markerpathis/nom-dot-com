@@ -52,12 +52,12 @@ export default function RecipeList() {
             </tbody>
           )}
         </Table>
+        <div className="d-grid gap-2">
+          <Button href="/#/recipecreate" variant="primary" size="lg">
+            Add Recipe
+          </Button>
+        </div>
       </Container>
-      <div className="d-grid gap-2">
-        <Button href="/#/recipecreate" variant="primary" size="lg">
-          Add Recipe
-        </Button>
-      </div>
     </>
   );
 }

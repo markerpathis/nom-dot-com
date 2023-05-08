@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Alert from "react-bootstrap/Alert";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
 
@@ -44,11 +45,22 @@ export default function RecipeCreate() {
         ingredients: ingredientList,
       })
       .then((res) => console.log("Posting data", res))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setShowAlert(true);
+      });
   };
+
+  const [showAlert, setShowAlert] = useState(false);
 
   return (
     <>
+      {showAlert === true && (
+        <Alert variant="warning" onClose={() => setShowAlert(false)} dismissible>
+          <Alert.Heading>Error!</Alert.Heading>
+          <p>Please fill out all the required fields. If you no longer need a row for an ingredient, please remove it.</p>
+        </Alert>
+      )}
       <h2>Add A Recipe</h2>
       <Form>
         <Row className="align-items-center">
