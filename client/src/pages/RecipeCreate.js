@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function RecipeCreate() {
   const [recipeName, setRecipeName] = useState("");
@@ -38,17 +39,19 @@ export default function RecipeCreate() {
     setIngredientList(list);
   };
 
-  const postRecipe = (event) => {
-    axios
-      .post("http://localhost:3001/api/recipes", {
+  const navigate = useNavigate();
+
+  const postRecipe = async (event) => {
+    try {
+      await axios.post("http://localhost:3001/api/recipes", {
         recipeName: recipeName,
         ingredients: ingredientList,
-      })
-      .then((res) => console.log("Posting data", res))
-      .catch((err) => {
-        console.log(err);
-        setShowAlert(true);
       });
+      navigate("/recipelist");
+    } catch (err) {
+      console.log(err);
+      setShowAlert(true);
+    }
   };
 
   const [showAlert, setShowAlert] = useState(false);
