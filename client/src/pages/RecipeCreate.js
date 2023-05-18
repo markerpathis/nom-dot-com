@@ -5,25 +5,37 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
-import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function RecipeCreate() {
   const [recipeName, setRecipeName] = useState("");
-  console.log(recipeName);
+  const [recipeDesc, setRecipeDesc] = useState("");
+  const [ingredientList, setIngredientList] = useState([{ ingredientDescrip: "" }]);
+  const [recipeDirectionList, setRecipeDirectionList] = useState([{ directionDescrip: "" }]);
+  console.log(recipeDirectionList);
 
-  const [ingredientList, setIngredientList] = useState([{ ingredientName: "", quantity: "", unit: "" }]);
-  console.log(ingredientList);
-
-  const handleRecipeNameChange = (event) => {
+  const handleInputChange = (event, index) => {
     const { target } = event;
+    const inputType = target.name;
     const inputValue = target.value;
-    setRecipeName(inputValue);
+    if (inputType === "recipeName") {
+      setRecipeName(inputValue);
+    } else if (inputType === "recipeDesc") {
+      setRecipeDesc(inputValue);
+    } else if (inputType === "ingredientDescrip") {
+      const listIngredient = [...ingredientList];
+      listIngredient[index][inputType] = inputValue;
+      setIngredientList(listIngredient);
+    } else {
+      const listDirection = [...recipeDirectionList];
+      listDirection[index][inputType] = inputValue;
+      setRecipeDirectionList(listDirection);
+    }
   };
 
   const handleIngredientAdd = () => {
-    setIngredientList([...ingredientList, { ingredientName: "", quantity: "", unit: "" }]);
+    setIngredientList([...ingredientList, { ingredientDescrip: "" }]);
   };
 
   const handleIngredientRemove = (index) => {
@@ -32,20 +44,25 @@ export default function RecipeCreate() {
     setIngredientList(list);
   };
 
-  const handleIngredientChange = (event, index) => {
-    const { name, value } = event.target;
-    const list = [...ingredientList];
-    list[index][name] = value;
-    setIngredientList(list);
+  const handleDirectionAdd = () => {
+    setRecipeDirectionList([...recipeDirectionList, { directionDescrip: "" }]);
+  };
+
+  const handleDirectionRemove = (index) => {
+    const list = [...recipeDirectionList];
+    list.splice(index, 1);
+    setRecipeDirectionList(list);
   };
 
   const navigate = useNavigate();
 
-  const postRecipe = async (event) => {
+  const postRecipe = async () => {
     try {
       await axios.post("http://localhost:3001/api/recipes", {
         recipeName: recipeName,
+        recipeDesc: recipeDesc,
         ingredients: ingredientList,
+        recipeDirections: recipeDirectionList,
       });
       navigate("/recipelist");
     } catch (err) {
@@ -66,49 +83,83 @@ export default function RecipeCreate() {
       )}
       <h2>Add A Recipe</h2>
       <Form>
-        <Row className="align-items-center">
-          <Col sm={3} className="my-1">
-            <Form.Label>Recipe Name</Form.Label>
-            <Form.Control placeholder="Recipe Name" value={recipeName || ""} onChange={handleRecipeNameChange} />
-          </Col>
-        </Row>
+        <Form.Group className="my-1">
+          <Form.Label>Recipe Name</Form.Label>
+          <Form.Control name="recipeName" placeholder="Recipe Name" value={recipeName || ""} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group className="my-1">
+          <Form.Label>Description</Form.Label>
+          <Form.Control name="recipeDesc" as="textarea" rows={2} placeholder="Description of your recipe" value={recipeDesc || ""} onChange={handleInputChange} />
+        </Form.Group>
+        <Form.Group className="my-1">
+          <Form.Label>Ingredients</Form.Label>
+          {ingredientList.map((singleIngredient, index) => (
+            <div key={index}>
+              <Row className="my-1">
+                <Col className="">
+                  <Form.Control
+                    name="ingredientDescrip"
+                    placeholder="Ingredient (e.g., 1 cup shredded cheddar cheese)"
+                    value={singleIngredient.ingredientDescrip || ""}
+                    onChange={(event) => handleInputChange(event, index)}
+                  />
+                </Col>
+                <Col xs="auto" className="">
+                  {ingredientList.length > 1 && (
+                    <Button type="button" onClick={() => handleIngredientRemove(index)}>
+                      Remove
+                    </Button>
+                  )}
+                </Col>
+              </Row>
+              <Row>
+                {ingredientList.length - 1 === index && (
+                  <Col className="my-1">
+                    <Button type="button" onClick={handleIngredientAdd}>
+                      Add Ingredient
+                    </Button>
+                  </Col>
+                )}
+              </Row>
+            </div>
+          ))}
+        </Form.Group>
+        <Form.Group className="my-1">
+          <Form.Label>Directions</Form.Label>
+          {recipeDirectionList.map((singleDirection, index) => (
+            <div key={index}>
+              <Row className="my-1">
+                <Col className="">
+                  <Form.Control
+                    name="directionDescrip"
+                    as="textarea"
+                    rows={2}
+                    placeholder="Directions for your recipe"
+                    value={singleDirection.directionDescrip || ""}
+                    onChange={(event) => handleInputChange(event, index)}
+                  />
+                </Col>
+                <Col xs="auto" className="">
+                  {recipeDirectionList.length > 1 && (
+                    <Button type="button" onClick={() => handleDirectionRemove(index)}>
+                      Remove
+                    </Button>
+                  )}
+                </Col>
+              </Row>
+              <Row>
+                {recipeDirectionList.length - 1 === index && (
+                  <Col className="my-1">
+                    <Button type="button" onClick={handleDirectionAdd}>
+                      Add Direction
+                    </Button>
+                  </Col>
+                )}
+              </Row>
+            </div>
+          ))}
+        </Form.Group>
       </Form>
-      <Form.Label>Ingredient List</Form.Label>
-      {ingredientList.map((singleIngredient, index) => (
-        <Form key={index}>
-          <Row className="align-items-center">
-            <Col sm={3} className="my-1">
-              <Form.Control name="ingredientName" placeholder="Ingredient" value={singleIngredient.ingredientName || ""} onChange={(event) => handleIngredientChange(event, index)} />
-            </Col>
-            <Col sm={3} className="my-1">
-              <InputGroup>
-                <Form.Control name="quantity" placeholder="Quantity" value={singleIngredient.quantity || ""} onChange={(event) => handleIngredientChange(event, index)} />
-              </InputGroup>
-            </Col>
-            <Col sm={3} className="my-1">
-              <InputGroup>
-                <Form.Control name="unit" placeholder="Unit" value={singleIngredient.unit || ""} onChange={(event) => handleIngredientChange(event, index)} />
-              </InputGroup>{" "}
-            </Col>
-            <Col xs="auto" className="my-1">
-              {ingredientList.length > 1 && (
-                <Button type="button" onClick={() => handleIngredientRemove(index)}>
-                  Remove
-                </Button>
-              )}
-            </Col>
-          </Row>
-          <Row>
-            {ingredientList.length - 1 === index && (
-              <Col className="my-1">
-                <Button type="button" onClick={handleIngredientAdd}>
-                  Add Ingredient
-                </Button>
-              </Col>
-            )}
-          </Row>
-        </Form>
-      ))}
 
       <Row>
         <Col className="my-1">
