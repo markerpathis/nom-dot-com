@@ -13,4 +13,11 @@ module.exports = {
       .then((dbRecipeData) => res.json(dbRecipeData))
       .catch((err) => res.status(500).json(err));
   },
+  // Get a single recipe
+  getSingleRecipe(req, res) {
+    Recipe.findOne({ _id: req.params.recipeId })
+      .select("-__v")
+      .then((recipe) => (!recipe ? res.status(404).json({ message: "No recipe with that ID" }) : res.json(recipe)))
+      .catch((err) => res.status(500).json(err));
+  },
 };

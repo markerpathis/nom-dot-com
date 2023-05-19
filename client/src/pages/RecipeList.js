@@ -6,8 +6,9 @@ import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 
-export default function RecipeList() {
+export default function RecipeList({ setRecipeId }) {
   const [recipeList, setRecipeList] = useState([]);
+  const [search, setSearch] = useState("");
 
   const getRecipes = () => {
     axios
@@ -31,13 +32,15 @@ export default function RecipeList() {
       .map((recipe, index) => {
         return (
           <tr key={index}>
-            <td>{recipe.recipeName}</td>
+            <td>
+              <a href={`/#/recipeview`} onClick={() => setRecipeId(recipe._id)}>
+                {recipe.recipeName}
+              </a>
+            </td>
           </tr>
         );
       });
   };
-
-  const [search, setSearch] = useState("");
 
   return (
     <>

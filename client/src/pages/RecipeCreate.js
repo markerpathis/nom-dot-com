@@ -14,6 +14,7 @@ export default function RecipeCreate() {
   const [ingredientList, setIngredientList] = useState([{ ingredientDescrip: "" }]);
   const [recipeDirectionList, setRecipeDirectionList] = useState([{ directionDescrip: "" }]);
   console.log(recipeDirectionList);
+  const navigate = useNavigate();
 
   const handleInputChange = (event, index) => {
     const { target } = event;
@@ -53,8 +54,6 @@ export default function RecipeCreate() {
     list.splice(index, 1);
     setRecipeDirectionList(list);
   };
-
-  const navigate = useNavigate();
 
   const postRecipe = async () => {
     try {
