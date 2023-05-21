@@ -8,6 +8,9 @@ export default function RecipeView({ recipeId }) {
   const [directionData, setDirectionData] = useState([]);
 
   const getRecipe = async () => {
+    if (!recipeId) {
+      recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
+    }
     try {
       await axios.get(`http://localhost:3001/api/recipes/${recipeId}`).then((data) => {
         setRecipeData(data.data);
@@ -42,7 +45,7 @@ export default function RecipeView({ recipeId }) {
       );
     });
   };
-  
+
   return (
     <>
       {recipeData ? (

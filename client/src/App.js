@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/recipelist" element={<RecipeList setRecipeId={setRecipeId} />} />
-        <Route exact path="/recipeview" element={<RecipeView recipeId={recipeId} />} />
+        <Route exact path="/recipeview/:recipeId" element={<RecipeView recipeId={recipeId} />} />
         <Route exact path="/recipecreate" element={<RecipeCreate />} />
         <Route exact path="/shoppinglist" element={<ShoppingList />} />
         <Route exact path="/login" element={<Login />} />
