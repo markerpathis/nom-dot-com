@@ -44,13 +44,15 @@ export default function RecipeList({ setRecipeId }) {
 
   return (
     <>
-      <h2>Recipe List</h2>
       <Container>
-        <Form>
+        <h2 className="pt-3 border-bottom border-dark border-2">Recipe List</h2>
+
+        <Form className="pt-3 pb-3">
           <Form.Group>
             <Form.Control onChange={(event) => setSearch(event.target.value)} type="text" placeholder="Search for a recipe" />
           </Form.Group>
         </Form>
+
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -68,7 +70,7 @@ export default function RecipeList({ setRecipeId }) {
           )}
         </Table>
         <div className="d-grid gap-2">
-          <Button href="/#/recipecreate" variant="primary" size="lg">
+          <Button style={{ width: "150px" }} href="/#/recipecreate" variant="primary">
             Add Recipe
           </Button>
         </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Container from "react-bootstrap/Container";
 
 export default function RecipeView({ recipeId }) {
   const [recipeData, setRecipeData] = useState([]);
@@ -29,9 +30,9 @@ export default function RecipeView({ recipeId }) {
   const populateIngredientData = () => {
     return ingredientData.map((ingredient, index) => {
       return (
-        <div key={index}>
-          <div>{ingredient.ingredientDescrip}</div>
-        </div>
+        <li className="pb-2" key={index}>
+          {ingredient.ingredientDescrip}
+        </li>
       );
     });
   };
@@ -39,9 +40,9 @@ export default function RecipeView({ recipeId }) {
   const populateDirectionData = () => {
     return directionData.map((direction, index) => {
       return (
-        <div key={index}>
-          <div>{direction.directionDescrip}</div>
-        </div>
+        <li className="pb-2" key={index}>
+          {direction.directionDescrip}
+        </li>
       );
     });
   };
@@ -49,14 +50,21 @@ export default function RecipeView({ recipeId }) {
   return (
     <>
       {recipeData ? (
-        <div>
-          <h2>{recipeData.recipeName}</h2>
-          <div>{recipeData.recipeDesc}</div>
-          <h4>Ingredients</h4>
-          <div>{populateIngredientData()}</div>
-          <h4>Directions</h4>
-          <div>{populateDirectionData()}</div>
-        </div>
+        <Container>
+          {/* title  */}
+          <h2 className="pt-3 border-bottom border-dark border-2">{recipeData.recipeName}</h2>
+
+          {/* description */}
+          <div className="pt-3 pb-3">{recipeData.recipeDesc}</div>
+
+          {/* ingredients */}
+          <h4 className="">Ingredients</h4>
+          <ul>{populateIngredientData()}</ul>
+
+          {/* directions */}
+          <h4 className="">Directions</h4>
+          <ol>{populateDirectionData()}</ol>
+        </Container>
       ) : (
         <h2>Loading</h2>
       )}
