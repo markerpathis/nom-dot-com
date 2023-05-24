@@ -33,7 +33,7 @@ export default function RecipeList({ setRecipeId }) {
         return (
           <tr key={index}>
             <td>
-              <a href={`/#/recipeview/${recipe._id}`} onClick={() => setRecipeId(recipe._id)}>
+              <a className="text-dark" href={`/#/recipeview/${recipe._id}`} onClick={() => setRecipeId(recipe._id)}>
                 {recipe.recipeName}
               </a>
             </td>

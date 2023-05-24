@@ -62,7 +62,7 @@ export default function RecipeView({ recipeId }) {
           <ul>{populateIngredientData()}</ul>
 
           {/* directions */}
-          <h4 className="">Directions</h4>
+          <h4 className="">Instructions</h4>
           <ol>{populateDirectionData()}</ol>
         </Container>
       ) : (

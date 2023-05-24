@@ -20,4 +20,9 @@ module.exports = {
       .then((recipe) => (!recipe ? res.status(404).json({ message: "No recipe with that ID" }) : res.json(recipe)))
       .catch((err) => res.status(500).json(err));
   },
+  updateRecipe(req, res) {
+    Recipe.findOneAndUpdate({ _id: req.params.recipeId }, { $set: req.body }, { runValidators: true, new: true })
+      .then((recipe) => (!recipe ? res.status(404).json({ message: "No recipe with that id!" }) : res.json(recipe)))
+      .catch((err) => res.status(500).json(err));
+  },
 };

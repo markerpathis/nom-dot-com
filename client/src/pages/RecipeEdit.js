@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -10,18 +10,44 @@ import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 
 export default function RecipeCreate() {
+  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [] });
+
   const [recipeName, setRecipeName] = useState("");
   const [recipeDesc, setRecipeDesc] = useState("");
   const [ingredientList, setIngredientList] = useState([{ ingredientDescrip: "" }]);
   const [recipeDirectionList, setRecipeDirectionList] = useState([{ directionDescrip: "" }]);
-  console.log(recipeDirectionList);
   const navigate = useNavigate();
+  const recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
+
+  const getRecipe = async () => {
+    try {
+      await axios.get(`http://localhost:3001/api/recipes/${recipeId}`).then((data) => {
+        setRecipeData(data.data);
+        // setRecipeData({ recipeName: recipeData.recipeName, recipeDesc: recipeData.recipeDesc, ingredients: [recipeData.ingredients] });
+        // console.log(recipeData);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getRecipe();
+  }, []);
+
+  useEffect(() => {
+    setRecipeName(recipeData.recipeName);
+    setRecipeDesc(recipeData.recipeDesc);
+    setIngredientList(recipeData.ingredients);
+    setRecipeDirectionList(recipeData.recipeDirections);
+  }, [recipeData]);
 
   const handleInputChange = (event, index) => {
     const { target } = event;
     const inputType = target.name;
     const inputValue = target.value;
     if (inputType === "recipeName") {
+    //   setRecipeData({ ...recipeData, recipeName: inputValue });
       setRecipeName(inputValue);
     } else if (inputType === "recipeDesc") {
       setRecipeDesc(inputValue);
@@ -56,9 +82,9 @@ export default function RecipeCreate() {
     setRecipeDirectionList(list);
   };
 
-  const postRecipe = async () => {
+  const updateRecipe = async () => {
     try {
-      await axios.post("http://localhost:3001/api/recipes", {
+      await axios.put(`http://localhost:3001/api/recipes/${recipeId}`, {
         recipeName: recipeName,
         recipeDesc: recipeDesc,
         ingredients: ingredientList,
@@ -73,6 +99,8 @@ export default function RecipeCreate() {
 
   const [showAlert, setShowAlert] = useState(false);
 
+  console.log({ ingredientList });
+
   return (
     <>
       <Container>
@@ -82,15 +110,15 @@ export default function RecipeCreate() {
             <p>Please fill out all the required fields. If you no longer need a row for an ingredient, please remove it.</p>
           </Alert>
         )}
-        <h2 className="pt-3 border-bottom border-dark border-2">Add A Recipe</h2>
+        <h2 className="pt-3 border-bottom border-dark border-2">Update Recipe</h2>
         <Form>
           <Form.Group className="my-1 pt-3 pb-3">
             <h4>Recipe Name</h4>
-            <Form.Control name="recipeName" className="pr-5" placeholder="Recipe Name" value={recipeName || ""} onChange={handleInputChange} />
+            <Form.Control name="recipeName" className="pr-5" value={recipeName || ""} onChange={handleInputChange} />
           </Form.Group>
           <Form.Group className="my-1 pb-3">
             <h4>Description</h4>
-            <Form.Control name="recipeDesc" as="textarea" rows={2} placeholder="Description of your recipe" value={recipeDesc || ""} onChange={handleInputChange} />
+            <Form.Control name="recipeDesc" as="textarea" rows={2} placeholder="Description of your recipe" value={recipeDesc || "loading"} onChange={handleInputChange} />
           </Form.Group>
           <Form.Group className="my-1 pb-3">
             <h4>Ingredients</h4>
@@ -128,7 +156,7 @@ export default function RecipeCreate() {
           </Form.Group>
           <Form.Group className="my-1 pb-3">
             <h4>Instructions</h4>
-            {recipeDirectionList.map((singleDirection, index) => (
+            {recipeDirectionList?.map((singleDirection, index) => (
               <div key={index}>
                 <Row className="my-1">
                   <Col className="">
@@ -165,7 +193,7 @@ export default function RecipeCreate() {
 
         <Row>
           <Col className="my-1">
-            <Button type="submit" style={{ width: "150px" }} onClick={postRecipe}>
+            <Button type="submit" style={{ width: "150px" }} onClick={updateRecipe}>
               Save
             </Button>
           </Col>
