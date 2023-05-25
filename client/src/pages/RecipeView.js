@@ -2,21 +2,18 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 
-export default function RecipeView({ recipeId }) {
-  const [recipeData, setRecipeData] = useState([]);
-  const [ingredientData, setIngredientData] = useState([]);
-  const [directionData, setDirectionData] = useState([]);
+export default function RecipeView() {
+  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [] });
+  const recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
+  const navigate = useNavigate();
 
   const getRecipe = async () => {
-    if (!recipeId) {
-      recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
-    }
     try {
       await axios.get(`http://localhost:3001/api/recipes/${recipeId}`).then((data) => {
-        setRecipeData(data.data);
-        setIngredientData(data.data.ingredients);
-        setDirectionData(data.data.recipeDirections);
+        setRecipeData({ recipeName: data.data.recipeName, recipeDesc: data.data.recipeDesc, ingredients: data.data.ingredients, recipeDirections: data.data.recipeDirections });
       });
     } catch (err) {
       console.log(err);
@@ -28,7 +25,7 @@ export default function RecipeView({ recipeId }) {
   }, []);
 
   const populateIngredientData = () => {
-    return ingredientData.map((ingredient, index) => {
+    return recipeData.ingredients.map((ingredient, index) => {
       return (
         <li className="pb-2" key={index}>
           {ingredient.ingredientDescrip}
@@ -38,7 +35,7 @@ export default function RecipeView({ recipeId }) {
   };
 
   const populateDirectionData = () => {
-    return directionData.map((direction, index) => {
+    return recipeData.recipeDirections.map((direction, index) => {
       return (
         <li className="pb-2" key={index}>
           {direction.directionDescrip}
@@ -64,6 +61,11 @@ export default function RecipeView({ recipeId }) {
           {/* directions */}
           <h4 className="">Instructions</h4>
           <ol>{populateDirectionData()}</ol>
+
+          <Button type="button" style={{ width: "150px" }} onClick={() => navigate(`/recipe-edit/${recipeId}`)}>
+            {/* <Button type="button" style={{ width: "150px" }}> */}
+            Edit
+          </Button>
         </Container>
       ) : (
         <h2>Loading</h2>
