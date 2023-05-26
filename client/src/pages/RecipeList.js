@@ -1,14 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
+import ButtonComp from "../components/ButtonComp";
+import { useNavigate } from "react-router-dom";
 
 export default function RecipeList({ setRecipeId }) {
   const [recipeList, setRecipeList] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   const getRecipes = () => {
     axios
@@ -43,7 +45,7 @@ export default function RecipeList({ setRecipeId }) {
   };
 
   return (
-    <>
+    <div style={{ background: "#fef9ef" }}>
       <Container>
         <h2 className="pt-3 border-bottom border-dark border-2">Recipe List</h2>
 
@@ -70,11 +72,9 @@ export default function RecipeList({ setRecipeId }) {
           )}
         </Table>
         <div className="d-grid gap-2">
-          <Button style={{ width: "150px" }} href="/#/recipecreate" variant="primary">
-            Add Recipe
-          </Button>
+          <ButtonComp label={"Add Recipe"} handleClick={() => navigate("/recipecreate")}></ButtonComp>
         </div>
       </Container>
-    </>
+    </div>
   );
 }

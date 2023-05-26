@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -8,6 +7,7 @@ import Alert from "react-bootstrap/Alert";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
+import ButtonComp from "../components/ButtonComp";
 
 export default function RecipeCreate() {
   const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [] });
@@ -78,7 +78,7 @@ export default function RecipeCreate() {
         ingredients: recipeData.ingredients,
         recipeDirections: recipeData.recipeDirections,
       });
-      navigate("/recipelist");
+      navigate(`/recipeview/${recipeId}`);
     } catch (err) {
       console.log(err);
       setShowAlert(true);
@@ -88,7 +88,7 @@ export default function RecipeCreate() {
   const [showAlert, setShowAlert] = useState(false);
 
   return (
-    <>
+    <div style={{ background: "#fef9ef" }}>
       <Container>
         {showAlert === true && (
           <Alert variant="warning" onClose={() => setShowAlert(false)} dismissible>
@@ -122,18 +122,14 @@ export default function RecipeCreate() {
 
                   {recipeData.ingredients.length > 1 && (
                     <Col xs="auto" className="">
-                      <Button type="button" style={{ width: "100px" }} onClick={() => handleIngredientRemove(index)}>
-                        Remove
-                      </Button>
+                      <ButtonComp label={"Remove"} width={"100px"} handleClick={() => handleIngredientRemove(index)}></ButtonComp>
                     </Col>
                   )}
                 </Row>
                 <Row>
                   {recipeData.ingredients.length - 1 === index && (
                     <Col className="my-1">
-                      <Button type="button" style={{ width: "150px" }} onClick={handleIngredientAdd}>
-                        Add Ingredient
-                      </Button>
+                      <ButtonComp label={"Add Ingredient"} handleClick={handleIngredientAdd}></ButtonComp>
                     </Col>
                   )}
                 </Row>
@@ -157,18 +153,14 @@ export default function RecipeCreate() {
                   </Col>
                   {recipeData.recipeDirections.length > 1 && (
                     <Col xs="auto" className="">
-                      <Button type="button" style={{ width: "100px" }} onClick={() => handleDirectionRemove(index)}>
-                        Remove
-                      </Button>
+                      <ButtonComp label={"Remove"} width={"100px"} handleClick={() => handleDirectionRemove(index)}></ButtonComp>
                     </Col>
                   )}
                 </Row>
                 <Row>
                   {recipeData.recipeDirections.length - 1 === index && (
                     <Col className="my-1">
-                      <Button type="button" style={{ width: "150px" }} onClick={handleDirectionAdd}>
-                        Add Direction
-                      </Button>
+                      <ButtonComp label={"Add Direction"} handleClick={handleDirectionAdd}></ButtonComp>
                     </Col>
                   )}
                 </Row>
@@ -178,13 +170,15 @@ export default function RecipeCreate() {
         </Form>
 
         <Row>
-          <Col className="my-1">
-            <Button type="submit" style={{ width: "150px" }} onClick={updateRecipe}>
-              Save
-            </Button>
+          <Col>
+            {" "}
+            <ButtonComp label={"Save"} handleClick={updateRecipe}></ButtonComp>
+          </Col>
+          <Col>
+            <ButtonComp label={"Cancel"} handleClick={() => navigate(`/recipeview/${recipeId}`)}></ButtonComp>
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
   );
 }

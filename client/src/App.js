@@ -9,6 +9,7 @@ import RecipeCreate from "./pages/RecipeCreate";
 import RecipeView from "./pages/RecipeView";
 import RecipeEdit from "./pages/RecipeEdit";
 import { useState } from "react";
+import "./index.css";
 
 function App() {
   const [recipeId, setRecipeId] = useState("");

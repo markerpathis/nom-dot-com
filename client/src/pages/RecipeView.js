@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import ButtonComp from "../components/ButtonComp";
 
 export default function RecipeView() {
   const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [] });
@@ -45,7 +45,7 @@ export default function RecipeView() {
   };
 
   return (
-    <>
+    <div style={{ background: "#fef9ef" }}>
       {recipeData ? (
         <Container>
           {/* title  */}
@@ -62,14 +62,11 @@ export default function RecipeView() {
           <h4 className="">Instructions</h4>
           <ol>{populateDirectionData()}</ol>
 
-          <Button type="button" style={{ width: "150px" }} onClick={() => navigate(`/recipe-edit/${recipeId}`)}>
-            {/* <Button type="button" style={{ width: "150px" }}> */}
-            Edit
-          </Button>
+          <ButtonComp label={"Edit"} handleClick={() => navigate(`/recipe-edit/${recipeId}`)}></ButtonComp>
         </Container>
       ) : (
         <h2>Loading</h2>
       )}
-    </>
+    </div>
   );
 }
