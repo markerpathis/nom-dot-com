@@ -45,7 +45,7 @@ export default function RecipeList({ setRecipeId }) {
   };
 
   return (
-    <div style={{ background: "#fef9ef" }}>
+    <div style={{ background: "#fef9ef" }} className="pt-4">
       <Container>
         <h2 className="pt-3 border-bottom border-dark border-2">Recipe List</h2>
 

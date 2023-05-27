@@ -72,7 +72,7 @@ export default function RecipeCreate() {
   const [showAlert, setShowAlert] = useState(false);
 
   return (
-    <div style={{ background: "#fef9ef" }}>
+    <div style={{ background: "#fef9ef" }} className="pt-4">
       <Container>
         {showAlert === true && (
           <Alert variant="warning" onClose={() => setShowAlert(false)} dismissible>

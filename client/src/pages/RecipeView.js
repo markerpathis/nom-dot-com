@@ -45,7 +45,7 @@ export default function RecipeView() {
   };
 
   return (
-    <div style={{ background: "#fef9ef" }}>
+    <div style={{ background: "#fef9ef" }} className="pt-4">
       {recipeData ? (
         <Container>
           {/* title  */}

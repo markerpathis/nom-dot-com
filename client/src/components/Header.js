@@ -23,6 +23,9 @@ export default function Header() {
             </NavDropdown.Item>
             <NavDropdown.Item href="/#/shoppinglist">Shopping List</NavDropdown.Item>
           </NavDropdown>
+          <Link to="/signup" className="nav-link pe-3 pt-3">
+            Sign Up
+          </Link>
           {/* <Link to="/login" className="nav-link">
             Login
           </Link> */}

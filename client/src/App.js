@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import RecipeCreate from "./pages/RecipeCreate";
 import RecipeView from "./pages/RecipeView";
 import RecipeEdit from "./pages/RecipeEdit";
+import SignUp from "./pages/SignUp";
 import { useState } from "react";
 import "./index.css";
 
@@ -25,6 +26,8 @@ function App() {
 
         <Route exact path="/recipecreate" element={<RecipeCreate />} />
         <Route exact path="/shoppinglist" element={<ShoppingList />} />
+        <Route exact path="/signup" element={<SignUp />} />
+
         <Route exact path="/login" element={<Login />} />
       </Routes>
     </Router>

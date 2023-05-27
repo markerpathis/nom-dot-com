@@ -25,4 +25,10 @@ module.exports = {
       .then((recipe) => (!recipe ? res.status(404).json({ message: "No recipe with that id!" }) : res.json(recipe)))
       .catch((err) => res.status(500).json(err));
   },
+  // Post a recipe
+  postUser(req, res) {
+    User.create(req.body)
+      .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => res.status(500).json(err));
+  },
 };
