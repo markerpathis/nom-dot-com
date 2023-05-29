@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../assets/logo_horizontal.png";
+import auth from "../utils/auth";
 
 export default function Header() {
   return (
@@ -23,12 +24,20 @@ export default function Header() {
             </NavDropdown.Item>
             <NavDropdown.Item href="/#/shoppinglist">Shopping List</NavDropdown.Item>
           </NavDropdown>
-          <Link to="/signup" className="nav-link pe-3 pt-3">
-            Sign Up
-          </Link>
-          {/* <Link to="/login" className="nav-link">
-            Login
-          </Link> */}
+          {auth.loggedIn() ? (
+            <Link to="/logout" className="nav-link pe-3 pt-3" onClick={() => auth.logout()}>
+              Logout
+            </Link>
+          ) : (
+            <>
+              <Link to="/signup" className="nav-link pe-3 pt-3">
+                Sign Up
+              </Link>
+              <Link to="/login" className="nav-link pe-3 pt-3">
+                Login
+              </Link>
+            </>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>
