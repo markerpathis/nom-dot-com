@@ -8,11 +8,15 @@ class AuthService {
     return decode(this.getToken());
   }
 
+  getId() {
+    return decode(this.getToken()).data._id;
+  }
+
   // check if user's logged in
   loggedIn() {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken();
-    console.log("TOKEN: ", token);
+    console.log("LOGGED IN TOKEN: ", token);
     return !!token && !this.isTokenExpired(token);
   }
 

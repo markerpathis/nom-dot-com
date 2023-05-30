@@ -1,9 +1,18 @@
 const router = require("express").Router();
-const { Recipe } = require("../../models");
+const { Recipe, User } = require("../../models");
 
 router.post("/", async (req, res) => {
   Recipe.create(req.body)
-    .then((dbRecipeData) => res.json(dbRecipeData))
+    .then((recipe) => {
+      return User.findOneAndUpdate({ _id: req.body.author }, { $addToSet: { recipes: recipe._id } }, { new: true });
+    })
+    .then((user) =>
+      !user
+        ? res.status(404).json({
+            message: "Recipe created, but found no user with that ID",
+          })
+        : res.json("Created recipe")
+    )
     .catch((err) => res.status(500).json(err));
 });
 

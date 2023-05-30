@@ -8,6 +8,7 @@ const recipeSchema = new Schema(
     recipeDesc: { type: String },
     ingredients: [ingredientSchema],
     recipeDirections: [directionSchema],
+    author: { type: String, required: true },
   },
   {
     toJSON: {

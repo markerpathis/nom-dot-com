@@ -36,7 +36,7 @@ export default function SignUp() {
         email: userData.email,
         password: userData.password,
       });
-      navigate("/recipelist");
+      navigate("/");
     } catch (err) {
       console.log(err);
       //   setShowAlert(true);

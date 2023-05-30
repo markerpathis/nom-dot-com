@@ -8,10 +8,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import ButtonComp from "../components/ButtonComp";
+import Auth from "../utils/auth";
 
 export default function RecipeCreate() {
-  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [{ ingredientDescrip: "" }], recipeDirections: [{ directionDescrip: "" }] });
+  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [{ ingredientDescrip: "" }], recipeDirections: [{ directionDescrip: "" }], author: "" });
   const navigate = useNavigate();
+  const userId = Auth.getId();
+  console.log(userId);
 
   const handleInputChange = (event, index) => {
     const { target } = event;
@@ -61,6 +64,7 @@ export default function RecipeCreate() {
         recipeDesc: recipeData.recipeDesc,
         ingredients: recipeData.ingredients,
         recipeDirections: recipeData.recipeDirections,
+        author: userId,
       });
       navigate("/recipelist");
     } catch (err) {

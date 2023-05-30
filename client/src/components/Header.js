@@ -18,16 +18,19 @@ export default function Header() {
           <Link to="/" className="nav-link pe-3 pt-3">
             Home
           </Link>
-          <NavDropdown className="pe-3 ps-1 pt-2" title="Lists" id="basic-nav-dropdown">
-            <NavDropdown.Item className="" href="/#/recipelist">
-              Recipe List
-            </NavDropdown.Item>
-            <NavDropdown.Item href="/#/shoppinglist">Shopping List</NavDropdown.Item>
-          </NavDropdown>
+
           {auth.loggedIn() ? (
-            <Link to="/logout" className="nav-link pe-3 pt-3" onClick={() => auth.logout()}>
-              Logout
-            </Link>
+            <>
+              <NavDropdown className="pe-3 ps-1 pt-2" title="Lists" id="basic-nav-dropdown">
+                <NavDropdown.Item className="" href="/#/recipelist">
+                  Recipe List
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/#/shoppinglist">Shopping List</NavDropdown.Item>
+              </NavDropdown>
+              <Link to="/logout" className="nav-link pe-3 pt-3" onClick={() => auth.logout()}>
+                Logout
+              </Link>
+            </>
           ) : (
             <>
               <Link to="/signup" className="nav-link pe-3 pt-3">

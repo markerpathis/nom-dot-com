@@ -6,6 +6,7 @@ const userSchema = new Schema({
   lastName: { type: String, required: true, trim: true },
   email: { type: String, required: true, trim: true },
   password: { type: String, required: true, trim: true, minlength: 5 },
+  recipes: [{ type: Schema.Types.ObjectId, ref: "Recipe" }],
 });
 
 // set up pre-save middleware to create password
