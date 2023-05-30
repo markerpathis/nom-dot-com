@@ -21,12 +21,15 @@ export default function Header() {
 
           {auth.loggedIn() ? (
             <>
-              <NavDropdown className="pe-3 ps-1 pt-2" title="Lists" id="basic-nav-dropdown">
-                <NavDropdown.Item className="" href="/#/recipelist">
-                  Recipe List
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/#/shoppinglist">Shopping List</NavDropdown.Item>
-              </NavDropdown>
+              {/* <NavDropdown className="pe-3 ps-1 pt-2" title="Lists" id="basic-nav-dropdown">
+                  <NavDropdown.Item className="" href="/#/recipelist">
+                    Recipe List
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/#/shoppinglist">Shopping List</NavDropdown.Item>
+                </NavDropdown> */}
+              <Link to="/recipelist" className="nav-link pe-3 pt-3">
+                Recipe List
+              </Link>
               <Link to="/logout" className="nav-link pe-3 pt-3" onClick={() => auth.logout()}>
                 Logout
               </Link>
