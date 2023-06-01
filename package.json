@@ -1,5 +1,5 @@
 {
-  "name": "nom-dot-com",
+  "name": "nomdotcom",
   "version": "1.0.0",
   "description": "this app is in progress...",
   "main": "server/server.js",
@@ -20,12 +20,7 @@
   "dependencies": {
     "mongodb": "^5.5.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/markerpathis/nom-dot-com.git"
-  },
-  "bugs": {
-    "url": "https://github.com/markerpathis/nom-dot-com/issues"
-  },
-  "homepage": "https://github.com/markerpathis/nom-dot-com#readme"
+  "engines": {
+    "node": "16.16"
+  }
 }

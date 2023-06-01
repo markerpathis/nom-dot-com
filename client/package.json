@@ -1,5 +1,5 @@
 {
-  "name": "nom-dot-com-client",
+  "name": "nomdotcom",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001/",
