@@ -30,7 +30,7 @@ app.get("*", (req, res) => {
 });
 
 app.use(routes);
-console.log({ routes });
+console.log("this is a test", { routes });
 
 db.once("open", () => {
   app.listen(PORT, () => {
