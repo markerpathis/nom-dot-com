@@ -7,11 +7,12 @@ const db = require("./config/connection");
 const routes = require("./controllers");
 
 const PORT = process.env.PORT || 3001;
-const app = express();
 
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
+const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
 // app.use(express.static(path.join(__dirname, "public")));
 
 if (process.env.NODE_ENV === "production") {
@@ -21,11 +22,12 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.use(routes);
-console.log({ routes });
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
+
+app.use(routes);
+console.log({ routes });
 
 db.once("open", () => {
   app.listen(PORT, () => {
