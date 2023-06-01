@@ -16,7 +16,7 @@ export default function RecipeCreate() {
 
   const getRecipe = async () => {
     try {
-      await axios.get(`http://localhost:3001/api/recipes/${recipeId}`).then((data) => {
+      await axios.get(`https://nomdotcom.herokuapp.com/api/recipes/${recipeId}`).then((data) => {
         // console.log(data.data);
         setRecipeData({ recipeName: data.data.recipeName, recipeDesc: data.data.recipeDesc, ingredients: data.data.ingredients, recipeDirections: data.data.recipeDirections });
       });
@@ -72,7 +72,7 @@ export default function RecipeCreate() {
 
   const updateRecipe = async () => {
     try {
-      await axios.put(`http://localhost:3001/api/recipes/${recipeId}`, {
+      await axios.put(`https://nomdotcom.herokuapp.com/api/recipes/${recipeId}`, {
         recipeName: recipeData.recipeName,
         recipeDesc: recipeData.recipeDesc,
         ingredients: recipeData.ingredients,

@@ -17,7 +17,7 @@ export default function RecipeList({ setRecipeId }) {
   const getRecipes = () => {
     console.log(userId);
     axios
-      .get(`http://localhost:3001/api/recipeCollection/${userId}`)
+      .get(`https://nomdotcom.herokuapp.com/api/recipeCollection/${userId}`)
       .then((data) => {
         console.log(data.data);
         setRecipeList(data.data);

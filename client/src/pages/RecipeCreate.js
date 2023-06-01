@@ -59,7 +59,7 @@ export default function RecipeCreate() {
 
   const postRecipe = async () => {
     try {
-      await axios.post("http://localhost:3001/api/recipes", {
+      await axios.post("https://nomdotcom.herokuapp.com/api/recipes", {
         recipeName: recipeData.recipeName,
         recipeDesc: recipeData.recipeDesc,
         ingredients: recipeData.ingredients,

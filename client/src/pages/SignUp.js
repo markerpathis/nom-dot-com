@@ -30,7 +30,7 @@ export default function SignUp() {
   const postUser = async () => {
     console.log("!!!!!!!!!!");
     try {
-      await axios.post("/api/users", {
+      await axios.post("https://nomdotcom.herokuapp.com/api/users", {
         firstName: userData.firstName,
         lastName: userData.lastName,
         email: userData.email,

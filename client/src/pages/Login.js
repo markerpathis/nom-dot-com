@@ -7,6 +7,7 @@ import ButtonComp from "../components/ButtonComp";
 import { useNavigate } from "react-router-dom";
 import Auth from "../utils/auth";
 
+
 export default function Login() {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -25,7 +26,7 @@ export default function Login() {
   const postLogin = async () => {
     console.log(loginData);
     try {
-      const loginResponse = await axios.post("/api/users/login", {
+      const loginResponse = await axios.post("https://nomdotcom.herokuapp.com/api/users/login", {
         email: loginData.email,
         password: loginData.password,
       });

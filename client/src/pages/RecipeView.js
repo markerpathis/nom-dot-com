@@ -12,7 +12,7 @@ export default function RecipeView() {
 
   const getRecipe = async () => {
     try {
-      await axios.get(`http://localhost:3001/api/recipes/${recipeId}`).then((data) => {
+      await axios.get(`https://nomdotcom.herokuapp.com/api/recipes/${recipeId}`).then((data) => {
         setRecipeData({ recipeName: data.data.recipeName, recipeDesc: data.data.recipeDesc, ingredients: data.data.ingredients, recipeDirections: data.data.recipeDirections });
       });
     } catch (err) {
