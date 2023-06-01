@@ -7,7 +7,6 @@ import ButtonComp from "../components/ButtonComp";
 import { useNavigate } from "react-router-dom";
 import Auth from "../utils/auth";
 
-
 export default function Login() {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
