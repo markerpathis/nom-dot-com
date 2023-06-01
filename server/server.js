@@ -27,14 +27,14 @@ if (process.env.NODE_ENV === "production") {
 //   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 // });
 
-router.get("/:userId", async (req, res) => {
+router.get("/api/recipeCollection/:userId", async (req, res) => {
   console.log("HEYYYYYYYYY");
   Recipe.find({ author: req.params.userId })
     .then((recipes) => res.json(recipes))
     .catch((err) => res.status(500).json(err));
 });
 
-router.post("/", async (req, res) => {
+router.post("/api/recipes", async (req, res) => {
   Recipe.create(req.body)
     .then((recipe) => {
       return User.findOneAndUpdate({ _id: req.body.author }, { $addToSet: { recipes: recipe._id } }, { new: true });
@@ -49,26 +49,26 @@ router.post("/", async (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-router.get("/", async (req, res) => {
+router.get("/api/recipes", async (req, res) => {
   Recipe.find()
     .then((recipes) => res.json(recipes))
     .catch((err) => res.status(500).json(err));
 });
 
-router.get("/:recipeId", async (req, res) => {
+router.get("/api/recipes/:recipeId", async (req, res) => {
   Recipe.findOne({ _id: req.params.recipeId })
     .select("-__v")
     .then((recipe) => (!recipe ? res.status(404).json({ message: "No recipe with that ID" }) : res.json(recipe)))
     .catch((err) => res.status(500).json(err));
 });
 
-router.put("/:recipeId", async (req, res) => {
+router.put("/api/recipes/:recipeId", async (req, res) => {
   Recipe.findOneAndUpdate({ _id: req.params.recipeId }, { $set: req.body }, { runValidators: true, new: true })
     .then((recipe) => (!recipe ? res.status(404).json({ message: "No recipe with that id!" }) : res.json(recipe)))
     .catch((err) => res.status(500).json(err));
 });
 
-router.post("/", async (req, res) => {
+router.post("/api/users", async (req, res) => {
   try {
     const userData = await User.create(req.body);
 
@@ -80,20 +80,20 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/api/users", async (req, res) => {
   User.find()
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err));
 });
 
-router.get("/:userId", async (req, res) => {
+router.get("/api/users/:userId", async (req, res) => {
   User.findOne({ _id: req.params.userId })
     .select("-__v")
     .then((user) => (!user ? res.status(404).json({ message: "No user with that ID" }) : res.json(user)))
     .catch((err) => res.status(500).json(err));
 });
 
-router.post("/login", async (req, res) => {
+router.post("/api/users/login", async (req, res) => {
   // console.log(req);
   try {
     const userData = await User.findOne({ email: req.body.email });
@@ -118,7 +118,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/logout", (req, res) => {
+router.post("/api/users/logout", (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
       res.status(204).end();
