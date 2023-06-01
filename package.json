@@ -1,7 +1,7 @@
 {
   "name": "nom-dot-com",
   "version": "1.0.0",
-  "description": "",
+  "description": "this app is in progress...",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -12,12 +12,20 @@
     "deploy": "git push heroku main:main"
   },
   "keywords": [],
-  "author": "",
+  "author": "Parker Mathis",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^5.1.0"
   },
   "dependencies": {
     "mongodb": "^5.5.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markerpathis/nom-dot-com.git"
+  },
+  "bugs": {
+    "url": "https://github.com/markerpathis/nom-dot-com/issues"
+  },
+  "homepage": "https://github.com/markerpathis/nom-dot-com#readme"
 }
