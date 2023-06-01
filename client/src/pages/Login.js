@@ -25,7 +25,7 @@ export default function Login() {
   const postLogin = async () => {
     console.log(loginData);
     try {
-      const loginResponse = await axios.post("http://localhost:3001/api/users/login", {
+      const loginResponse = await axios.post("/api/users/login", {
         email: loginData.email,
         password: loginData.password,
       });
