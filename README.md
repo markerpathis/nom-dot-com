@@ -12,20 +12,27 @@ This current deployment is my MVP, but there is plenty more I will be continuing
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Technology Used](#technology-used)
 - [Usage](#usage)
 - [License](#license)
 - [Contributing](#contributing)
 - [Tests](#tests)
 - [Questions](#questions)
 
-## Installation
+## Technology Used
 
-N/A
+- JavaScript
+- React
+- Express
+- Mongoose
+- Bootstrap
+- bcrypt
+- Jsonwebtoken
+- Axios
 
 ## Usage
 
-Below are links to the deployed web application and the repository on GitHub:
+Below are links to the deployed web application (using Heroku) and the repository on GitHub:
 
 - https://nomdotcom.herokuapp.com/
 - https://github.com/markerpathis/nom-dot-com
