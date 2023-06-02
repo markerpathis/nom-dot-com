@@ -4,7 +4,7 @@
 
 ## Description
 
-My objective of this solo project was to create a react app to continue practicing my React skills, after finsihing my coding bootcamp course through UW.
+My objective of this solo project was to create an app to continue practicing my React skills, after finsihing my coding bootcamp program through UW.
 
 Nom Dot Com, is a recipe app, which allows users to save, edit, and search for recipes.
 
