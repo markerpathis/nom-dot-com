@@ -51,7 +51,7 @@ export default function SignUp() {
           <Form.Group className="mb-3">
             <Row>
               <Col>
-                <Form.Label>Fist Name</Form.Label>
+                <Form.Label>First Name</Form.Label>
                 <Form.Control name="firstName" placeholder="Enter First Name" value={userData.firstName || ""} onChange={handleInputChange} />
               </Col>
               <Col>
