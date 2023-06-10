@@ -58,8 +58,14 @@ export default function RecipeCreate() {
   };
 
   const postRecipe = async () => {
+    let postApiUrl = "";
+    if (process.env.NODE_ENV === "production") {
+      postApiUrl = "https://nomdotcom.herokuapp.com/api/recipes";
+    } else {
+      postApiUrl = "http://localhost:3001/api/recipes";
+    }
     try {
-      await axios.post("https://nomdotcom.herokuapp.com/api/recipes", {
+      await axios.post(postApiUrl, {
         recipeName: recipeData.recipeName,
         recipeDesc: recipeData.recipeDesc,
         ingredients: recipeData.ingredients,

@@ -11,8 +11,14 @@ export default function RecipeView() {
   const navigate = useNavigate();
 
   const getRecipe = async () => {
+    let recipeApiUrl = "";
+    if (process.env.NODE_ENV === "production") {
+      recipeApiUrl = `https://nomdotcom.herokuapp.com/api/recipes/${recipeId}`;
+    } else {
+      recipeApiUrl = `http://localhost:3001/api/recipes/${recipeId}`;
+    }
     try {
-      await axios.get(`https://nomdotcom.herokuapp.com/api/recipes/${recipeId}`).then((data) => {
+      await axios.get(recipeApiUrl).then((data) => {
         setRecipeData({ recipeName: data.data.recipeName, recipeDesc: data.data.recipeDesc, ingredients: data.data.ingredients, recipeDirections: data.data.recipeDirections });
       });
     } catch (err) {

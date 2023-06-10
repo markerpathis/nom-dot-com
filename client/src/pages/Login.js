@@ -24,8 +24,14 @@ export default function Login() {
 
   const postLogin = async () => {
     console.log(loginData);
+    let loginApiUrl = "";
+    if (process.env.NODE_ENV === "production") {
+      loginApiUrl = "https://nomdotcom.herokuapp.com/api/users/login";
+    } else {
+      loginApiUrl = "http://localhost:3001/api/users/login";
+    }
     try {
-      const loginResponse = await axios.post("https://nomdotcom.herokuapp.com/api/users/login", {
+      const loginResponse = await axios.post(loginApiUrl, {
         email: loginData.email,
         password: loginData.password,
       });

@@ -28,9 +28,15 @@ export default function SignUp() {
   };
 
   const postUser = async () => {
-    console.log("!!!!!!!!!!");
+    let signupApiUrl = "";
+    if (process.env.NODE_ENV === "production") {
+      signupApiUrl = "https://nomdotcom.herokuapp.com/api/users";
+    } else {
+      signupApiUrl = "http://localhost:3001/api/users";
+    }
     try {
-      await axios.post("https://nomdotcom.herokuapp.com/api/users", {
+      console.log(signupApiUrl);
+      await axios.post(signupApiUrl, {
         firstName: userData.firstName,
         lastName: userData.lastName,
         email: userData.email,
@@ -39,7 +45,6 @@ export default function SignUp() {
       navigate("/");
     } catch (err) {
       console.log(err);
-      //   setShowAlert(true);
     }
   };
 

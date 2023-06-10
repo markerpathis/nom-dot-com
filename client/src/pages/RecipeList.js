@@ -16,8 +16,14 @@ export default function RecipeList({ setRecipeId }) {
 
   const getRecipes = () => {
     console.log(userId);
+    let recipeApiUrl = "";
+    if (process.env.NODE_ENV === "production") {
+      recipeApiUrl = `https://nomdotcom.herokuapp.com/api/recipeCollection/${userId}`;
+    } else {
+      recipeApiUrl = `http://localhost:3001/api/recipeCollection/${userId}`;
+    }
     axios
-      .get(`https://nomdotcom.herokuapp.com/api/recipeCollection/${userId}`)
+      .get(recipeApiUrl)
       .then((data) => {
         console.log(data.data);
         setRecipeList(data.data);

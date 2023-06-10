@@ -15,8 +15,14 @@ export default function RecipeCreate() {
   const recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
 
   const getRecipe = async () => {
+    let getApiUrl = "";
+    if (process.env.NODE_ENV === "production") {
+      getApiUrl = `https://nomdotcom.herokuapp.com/api/recipes/${recipeId}`;
+    } else {
+      getApiUrl = `http://localhost:3001/api/recipes/${recipeId}`;
+    }
     try {
-      await axios.get(`https://nomdotcom.herokuapp.com/api/recipes/${recipeId}`).then((data) => {
+      await axios.get(getApiUrl).then((data) => {
         // console.log(data.data);
         setRecipeData({ recipeName: data.data.recipeName, recipeDesc: data.data.recipeDesc, ingredients: data.data.ingredients, recipeDirections: data.data.recipeDirections });
       });
@@ -71,8 +77,14 @@ export default function RecipeCreate() {
   };
 
   const updateRecipe = async () => {
+    let updateApiUrl = "";
+    if (process.env.NODE_ENV === "production") {
+      updateApiUrl = `https://nomdotcom.herokuapp.com/api/recipes/${recipeId}`;
+    } else {
+      updateApiUrl = `http://localhost:3001/api/recipes/${recipeId}`;
+    }
     try {
-      await axios.put(`https://nomdotcom.herokuapp.com/api/recipes/${recipeId}`, {
+      await axios.put(updateApiUrl, {
         recipeName: recipeData.recipeName,
         recipeDesc: recipeData.recipeDesc,
         ingredients: recipeData.ingredients,
