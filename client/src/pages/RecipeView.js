@@ -4,6 +4,8 @@ import axios from "axios";
 import Container from "react-bootstrap/Container";
 import { useNavigate } from "react-router-dom";
 import ButtonComp from "../components/ButtonComp";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 export default function RecipeView() {
   const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [] });
@@ -50,6 +52,21 @@ export default function RecipeView() {
     });
   };
 
+  const deleteRecipe = async () => {
+    let deleteApiUrl = "";
+    if (process.env.NODE_ENV === "production") {
+      deleteApiUrl = `https://nomdotcom.herokuapp.com/api/recipes/${recipeId}`;
+    } else {
+      deleteApiUrl = `http://localhost:3001/api/recipes/${recipeId}`;
+    }
+    try {
+      await axios.delete(deleteApiUrl);
+      navigate(`/recipelist`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div style={{ background: "#fef9ef" }} className="pt-4">
       {recipeData ? (
@@ -67,8 +84,12 @@ export default function RecipeView() {
           {/* directions */}
           <h4 className="">Instructions</h4>
           <ol>{populateDirectionData()}</ol>
-
-          <ButtonComp label={"Edit"} handleClick={() => navigate(`/recipe-edit/${recipeId}`)}></ButtonComp>
+          <Row>
+            <Col>
+              <ButtonComp label={"Edit"} handleClick={() => navigate(`/recipe-edit/${recipeId}`)}></ButtonComp>
+              <ButtonComp label={"Delete"} handleClick={deleteRecipe}></ButtonComp>
+            </Col>
+          </Row>
         </Container>
       ) : (
         <h2>Loading</h2>

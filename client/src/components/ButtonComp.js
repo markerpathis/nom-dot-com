@@ -6,6 +6,7 @@ export default function ButtonComp({ label, handleClick, width = "150px" }) {
     button: {
       width: width,
       backgroundColor: "#FFCB77",
+      marginRight: "10px",
     },
   };
   return (

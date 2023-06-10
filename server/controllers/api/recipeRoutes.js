@@ -35,4 +35,20 @@ router.put("/:recipeId", async (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
+router.delete("/:recipeId", async (req, res) => {
+  Recipe.findOneAndRemove({ _id: req.params.recipeId })
+    .then((recipe) => User.findOneAndUpdate({ recipes: req.params.recipeId }, { $pull: { recipes: req.params.recipeId } }, { new: true }))
+    .then((user) =>
+      !user
+        ? res.status(404).json({
+            message: "Recipe deleted, but no user found with that recipe saved",
+          })
+        : res.json({ message: "Recipe successfully deleted from user" })
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 module.exports = router;

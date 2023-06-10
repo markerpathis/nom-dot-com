@@ -183,10 +183,7 @@ export default function RecipeCreate() {
 
         <Row>
           <Col>
-            {" "}
             <ButtonComp label={"Save"} handleClick={updateRecipe}></ButtonComp>
-          </Col>
-          <Col>
             <ButtonComp label={"Cancel"} handleClick={() => navigate(`/recipeview/${recipeId}`)}></ButtonComp>
           </Col>
         </Row>
