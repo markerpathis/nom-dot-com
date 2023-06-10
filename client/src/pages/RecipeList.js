@@ -11,8 +11,17 @@ import Auth from "../utils/auth";
 export default function RecipeList({ setRecipeId }) {
   const [recipeList, setRecipeList] = useState([]);
   const [search, setSearch] = useState("");
-  const userId = Auth.getId();
+  let userId = "";
   const navigate = useNavigate();
+
+  const authCheck = () => {
+    if (Auth.loggedIn() === false) {
+      navigate("/login");
+    } else {
+      userId = Auth.getId();
+      return;
+    }
+  };
 
   const getRecipes = () => {
     console.log(userId);
@@ -25,13 +34,15 @@ export default function RecipeList({ setRecipeId }) {
     axios
       .get(recipeApiUrl)
       .then((data) => {
-        console.log(data.data);
         setRecipeList(data.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
+    authCheck();
     getRecipes();
   }, []);
 

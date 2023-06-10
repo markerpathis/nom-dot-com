@@ -50,11 +50,15 @@ export default function Login() {
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email Address</Form.Label>
             <Form.Control name="email" type="email" placeholder="Enter Email Address" value={loginData.email || ""} onChange={handleInputChange} />
-            <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control name="password" type="password" placeholder="Enter Password" value={loginData.password || ""} onChange={handleInputChange} />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Text className="text-muted">
+              Do you need to create an account? <a href="/signup">Sign Up</a>
+            </Form.Text>
           </Form.Group>
           <ButtonComp label={"Submit"} handleClick={postLogin}></ButtonComp>
         </Form>

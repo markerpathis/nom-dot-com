@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../assets/logo_horizontal.png";
-import auth from "../utils/auth";
+import Auth from "../utils/auth";
 
 export default function Header() {
   return (
@@ -19,7 +19,7 @@ export default function Header() {
             Home
           </Link>
 
-          {auth.loggedIn() ? (
+          {Auth.loggedIn() ? (
             <>
               {/* <NavDropdown className="pe-3 ps-1 pt-2" title="Lists" id="basic-nav-dropdown">
                   <NavDropdown.Item className="" href="/#/recipelist">
@@ -30,7 +30,7 @@ export default function Header() {
               <Link to="/recipelist" className="nav-link pe-3 pt-3">
                 Recipe List
               </Link>
-              <Link to="/logout" className="nav-link pe-3 pt-3" onClick={() => auth.logout()}>
+              <Link to="/logout" className="nav-link pe-3 pt-3" onClick={() => Auth.logout()}>
                 Logout
               </Link>
             </>

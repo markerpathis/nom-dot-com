@@ -8,11 +8,20 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import ButtonComp from "../components/ButtonComp";
+import Auth from "../utils/auth";
 
 export default function RecipeCreate() {
   const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [] });
   const navigate = useNavigate();
   const recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
+
+  const authCheck = () => {
+    if (Auth.loggedIn() === false) {
+      navigate("/login");
+    } else {
+      return;
+    }
+  };
 
   const getRecipe = async () => {
     let getApiUrl = "";
@@ -32,6 +41,7 @@ export default function RecipeCreate() {
   };
 
   useEffect(() => {
+    authCheck();
     getRecipe();
   }, []);
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -13,8 +13,20 @@ import Auth from "../utils/auth";
 export default function RecipeCreate() {
   const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [{ ingredientDescrip: "" }], recipeDirections: [{ directionDescrip: "" }], author: "" });
   const navigate = useNavigate();
-  const userId = Auth.getId();
-  console.log(userId);
+  let userId = "";
+
+  const authCheck = () => {
+    if (Auth.loggedIn() === false) {
+      navigate("/login");
+    } else {
+      userId = Auth.getId();
+      return;
+    }
+  };
+
+  useEffect(() => {
+    authCheck();
+  }, []);
 
   const handleInputChange = (event, index) => {
     const { target } = event;

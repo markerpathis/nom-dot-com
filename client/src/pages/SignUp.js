@@ -74,6 +74,11 @@ export default function SignUp() {
             <Form.Label>Password</Form.Label>
             <Form.Control name="password" type="password" placeholder="Enter Password" value={userData.password || ""} onChange={handleInputChange} />
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Text className="text-muted">
+              Do you already have an account? <a href="/login">Login</a>
+            </Form.Text>
+          </Form.Group>
           <ButtonComp label={"Submit"} handleClick={postUser}></ButtonComp>
         </Form>
       </Container>

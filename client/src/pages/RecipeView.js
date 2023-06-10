@@ -6,11 +6,20 @@ import { useNavigate } from "react-router-dom";
 import ButtonComp from "../components/ButtonComp";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Auth from "../utils/auth";
 
 export default function RecipeView() {
   const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [] });
   const recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
   const navigate = useNavigate();
+
+  const authCheck = () => {
+    if (Auth.loggedIn() === false) {
+      navigate("/login");
+    } else {
+      return;
+    }
+  };
 
   const getRecipe = async () => {
     let recipeApiUrl = "";
@@ -29,6 +38,7 @@ export default function RecipeView() {
   };
 
   useEffect(() => {
+    authCheck();
     getRecipe();
   }, []);
 
