@@ -10,6 +10,9 @@ const recipeSchema = new Schema(
     recipeDirections: [directionSchema],
     author: { type: String, required: true },
     public: { type: Boolean, default: false, required: true },
+    createdDate: { type: Date, default: Date.now() },
+    tagCuisine: { type: String },
+    tagDishType: { type: String },
   },
   {
     toJSON: {

@@ -11,7 +11,7 @@ import ButtonComp from "../components/ButtonComp";
 import Auth from "../utils/auth";
 
 export default function RecipeCreate() {
-  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [] });
+  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [], public: false, tagCuisine: "", tagDishType: "" });
   const navigate = useNavigate();
   const recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
 
@@ -39,6 +39,8 @@ export default function RecipeCreate() {
           ingredients: data.data.ingredients,
           recipeDirections: data.data.recipeDirections,
           public: data.data.public,
+          tagCuisine: data.data.tagCuisine,
+          tagDishType: data.data.tagDishType,
         });
       });
     } catch (err) {
@@ -59,6 +61,10 @@ export default function RecipeCreate() {
       setRecipeData({ ...recipeData, recipeName: inputValue });
     } else if (inputType === "recipeDesc") {
       setRecipeData({ ...recipeData, recipeDesc: inputValue });
+    } else if (inputType === "cuisine") {
+      setRecipeData({ ...recipeData, tagCuisine: inputValue });
+    } else if (inputType === "dishType") {
+      setRecipeData({ ...recipeData, tagDishType: inputValue });
     } else if (inputType === "public") {
       if (event.target.checked) {
         setRecipeData({ ...recipeData, public: true });
@@ -112,6 +118,8 @@ export default function RecipeCreate() {
         ingredients: recipeData.ingredients,
         recipeDirections: recipeData.recipeDirections,
         public: recipeData.public,
+        tagCuisine: recipeData.tagCuisine,
+        tagDishType: recipeData.tagDishType,
       });
       navigate(`/recipeview/${recipeId}`);
     } catch (err) {
@@ -202,6 +210,41 @@ export default function RecipeCreate() {
               </div>
             ))}
           </Form.Group>
+          <Row>
+            <Col>
+              {" "}
+              <Form.Group className="my-1 pb-3">
+                <h4>Cuisine</h4>
+                <Form.Select name="cuisine" value={recipeData.tagCuisine || ""} onChange={handleInputChange}>
+                  <option value="">Select a cuisine</option>
+                  <option value="Appetizer">Appetizer</option>
+                  <option value="Cocktail">Cocktail</option>
+                  <option value="Dessert">Dessert</option>
+                  <option value="Drink">Drink</option>
+                  <option value="Entree">Entree</option>
+                  <option value="Side Dish">Side Dish</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col>
+              {" "}
+              <Form.Group className="my-1 pb-3">
+                <h4>Dish Type</h4>
+                <Form.Select name="dishType" value={recipeData.tagDishType || ""} onChange={handleInputChange}>
+                  <option value="">Select a dish type</option>
+                  <option value="American">American</option>
+                  <option value="British">British</option>
+                  <option value="Chinese">Chinese</option>
+                  <option value="Greek">Greek</option>
+                  <option value="Italian">Italian</option>
+                  <option value="Japanese">Japanese</option>
+                  <option value="Korean">Korean</option>
+                  <option value="Mexican">Mexican</option>
+                  <option value="Thai">Thai</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+          </Row>
           <Form.Group className="my-1 pb-3">
             <h4>Public Share Settings</h4>
             {recipeData.public === true && <Form.Check name="public" type="checkbox" label="Make my recipe public" onChange={handleInputChange} checked />}
