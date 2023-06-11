@@ -9,17 +9,9 @@ import Row from "react-bootstrap/Row";
 import Auth from "../utils/auth";
 
 export default function RecipeView() {
-  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [] });
+  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [], author: "", public: "" });
   const recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
   const navigate = useNavigate();
-
-  const authCheck = () => {
-    if (Auth.loggedIn() === false) {
-      navigate("/login");
-    } else {
-      return;
-    }
-  };
 
   const getRecipe = async () => {
     let recipeApiUrl = "";
@@ -30,7 +22,14 @@ export default function RecipeView() {
     }
     try {
       await axios.get(recipeApiUrl).then((data) => {
-        setRecipeData({ recipeName: data.data.recipeName, recipeDesc: data.data.recipeDesc, ingredients: data.data.ingredients, recipeDirections: data.data.recipeDirections });
+        setRecipeData({
+          recipeName: data.data.recipeName,
+          recipeDesc: data.data.recipeDesc,
+          ingredients: data.data.ingredients,
+          recipeDirections: data.data.recipeDirections,
+          author: data.data.author,
+          public: data.data.public,
+        });
       });
     } catch (err) {
       console.log(err);
@@ -38,9 +37,12 @@ export default function RecipeView() {
   };
 
   useEffect(() => {
-    authCheck();
     getRecipe();
   }, []);
+
+  useEffect(() => {
+    notPublicRedirect();
+  }, [recipeData]);
 
   const populateIngredientData = () => {
     return recipeData.ingredients.map((ingredient, index) => {
@@ -77,6 +79,30 @@ export default function RecipeView() {
     }
   };
 
+  const authorValidate = () => {
+    if (Auth.loggedIn() === true) {
+      if (recipeData.author === Auth.getId()) {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  console.log(recipeData);
+
+  const notPublicRedirect = () => {
+    // Checks if recipe is private and user is not logged in
+    if (recipeData.public === false && Auth.loggedIn() === false) {
+      navigate("/publiclist");
+      // Checks if recipe is private, but if the user ID matches the signed in user
+    } else if (recipeData.public === false && Auth.loggedIn() === true && recipeData.author !== Auth.getId()) {
+      navigate("/publiclist");
+    } else {
+      return;
+    }
+  };
+
   return (
     <div style={{ background: "#fef9ef" }} className="pt-4">
       {recipeData ? (
@@ -94,12 +120,14 @@ export default function RecipeView() {
           {/* directions */}
           <h4 className="">Instructions</h4>
           <ol>{populateDirectionData()}</ol>
-          <Row>
-            <Col>
-              <ButtonComp label={"Edit"} handleClick={() => navigate(`/recipe-edit/${recipeId}`)}></ButtonComp>
-              <ButtonComp label={"Delete"} handleClick={deleteRecipe}></ButtonComp>
-            </Col>
-          </Row>
+          {authorValidate() === true && (
+            <Row>
+              <Col>
+                <ButtonComp label={"Edit"} handleClick={() => navigate(`/recipe-edit/${recipeId}`)}></ButtonComp>
+                <ButtonComp label={"Delete"} handleClick={deleteRecipe}></ButtonComp>
+              </Col>
+            </Row>
+          )}
         </Container>
       ) : (
         <h2>Loading</h2>

@@ -33,7 +33,13 @@ export default function RecipeCreate() {
     try {
       await axios.get(getApiUrl).then((data) => {
         // console.log(data.data);
-        setRecipeData({ recipeName: data.data.recipeName, recipeDesc: data.data.recipeDesc, ingredients: data.data.ingredients, recipeDirections: data.data.recipeDirections });
+        setRecipeData({
+          recipeName: data.data.recipeName,
+          recipeDesc: data.data.recipeDesc,
+          ingredients: data.data.ingredients,
+          recipeDirections: data.data.recipeDirections,
+          public: data.data.public,
+        });
       });
     } catch (err) {
       console.log(err);
@@ -53,6 +59,12 @@ export default function RecipeCreate() {
       setRecipeData({ ...recipeData, recipeName: inputValue });
     } else if (inputType === "recipeDesc") {
       setRecipeData({ ...recipeData, recipeDesc: inputValue });
+    } else if (inputType === "public") {
+      if (event.target.checked) {
+        setRecipeData({ ...recipeData, public: true });
+      } else {
+        setRecipeData({ ...recipeData, public: false });
+      }
     } else if (inputType === "ingredientDescrip") {
       const listIngredient = [...recipeData.ingredients];
       listIngredient[index][inputType] = inputValue;
@@ -99,6 +111,7 @@ export default function RecipeCreate() {
         recipeDesc: recipeData.recipeDesc,
         ingredients: recipeData.ingredients,
         recipeDirections: recipeData.recipeDirections,
+        public: recipeData.public,
       });
       navigate(`/recipeview/${recipeId}`);
     } catch (err) {
@@ -188,6 +201,12 @@ export default function RecipeCreate() {
                 </Row>
               </div>
             ))}
+          </Form.Group>
+          <Form.Group className="my-1 pb-3">
+            <h4>Public Share Settings</h4>
+            {recipeData.public === true && <Form.Check name="public" type="checkbox" label="Make my recipe public" onChange={handleInputChange} checked />}
+            {recipeData.public === false && <Form.Check name="public" type="checkbox" label="Make my recipe public" onChange={handleInputChange} />}
+            <Form.Text>If you check the box above, your recipe will be visible to all site visitors. This is a great way to share your favorite recipes!</Form.Text>
           </Form.Group>
         </Form>
 

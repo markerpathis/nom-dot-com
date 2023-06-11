@@ -9,6 +9,7 @@ import RecipeCreate from "./pages/RecipeCreate";
 import RecipeView from "./pages/RecipeView";
 import RecipeEdit from "./pages/RecipeEdit";
 import SignUp from "./pages/SignUp";
+import RecipeListPublic from "./pages/RecipeListPublic";
 import { useState } from "react";
 import "./index.css";
 
@@ -21,6 +22,8 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/recipelist" element={<RecipeList setRecipeId={setRecipeId} />} />
+        <Route exact path="/publiclist" element={<RecipeListPublic setRecipeId={setRecipeId} />} />
+
         <Route exact path="/recipeview/:recipeId" element={<RecipeView recipeId={recipeId} />} />
         <Route exact path="/recipe-edit/:recipeId" element={<RecipeEdit recipeId={recipeId} />} />
 

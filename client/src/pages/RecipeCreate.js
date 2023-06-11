@@ -11,15 +11,14 @@ import ButtonComp from "../components/ButtonComp";
 import Auth from "../utils/auth";
 
 export default function RecipeCreate() {
-  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [{ ingredientDescrip: "" }], recipeDirections: [{ directionDescrip: "" }], author: "" });
+  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [{ ingredientDescrip: "" }], recipeDirections: [{ directionDescrip: "" }], author: "", public: false });
   const navigate = useNavigate();
-  let userId = "";
+  console.log(recipeData);
 
   const authCheck = () => {
     if (Auth.loggedIn() === false) {
       navigate("/login");
     } else {
-      userId = Auth.getId();
       return;
     }
   };
@@ -36,6 +35,12 @@ export default function RecipeCreate() {
       setRecipeData({ ...recipeData, recipeName: inputValue });
     } else if (inputType === "recipeDesc") {
       setRecipeData({ ...recipeData, recipeDesc: inputValue });
+    } else if (inputType === "public") {
+      if (event.target.checked) {
+        setRecipeData({ ...recipeData, public: true });
+      } else {
+        setRecipeData({ ...recipeData, public: false });
+      }
     } else if (inputType === "ingredientDescrip") {
       const listIngredient = [...recipeData.ingredients];
       listIngredient[index][inputType] = inputValue;
@@ -70,6 +75,8 @@ export default function RecipeCreate() {
   };
 
   const postRecipe = async () => {
+    const userId = Auth.getId();
+
     let postApiUrl = "";
     if (process.env.NODE_ENV === "production") {
       postApiUrl = "https://nomdotcom.herokuapp.com/api/recipes";
@@ -83,10 +90,11 @@ export default function RecipeCreate() {
         ingredients: recipeData.ingredients,
         recipeDirections: recipeData.recipeDirections,
         author: userId,
+        public: recipeData.public,
       });
       navigate("/recipelist");
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data);
       setShowAlert(true);
     }
   };
@@ -172,6 +180,11 @@ export default function RecipeCreate() {
                 </Row>
               </div>
             ))}
+          </Form.Group>
+          <Form.Group className="my-1 pb-3">
+            <h4>Public Share Settings</h4>
+            <Form.Check name="public" type="checkbox" label="Make my recipe public" onChange={handleInputChange} />
+            <Form.Text>If you check the box above, your recipe will be visible to all site visitors. This is a great way to share your favorite recipes!</Form.Text>
           </Form.Group>
         </Form>
 

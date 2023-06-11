@@ -9,6 +9,7 @@ const recipeSchema = new Schema(
     ingredients: [ingredientSchema],
     recipeDirections: [directionSchema],
     author: { type: String, required: true },
+    public: { type: Boolean, default: false, required: true },
   },
   {
     toJSON: {

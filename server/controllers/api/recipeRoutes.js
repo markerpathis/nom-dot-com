@@ -51,4 +51,14 @@ router.delete("/:recipeId", async (req, res) => {
     });
 });
 
+router.post("/public", async (req, res) => {
+  try {
+    const recipeData = await Recipe.find({ public: true });
+
+    res.json(recipeData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 module.exports = router;
