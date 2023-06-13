@@ -19,20 +19,16 @@ export default function Header() {
             Home
           </Link>
           <Link to="/publiclist" className="nav-link pe-3 pt-3">
-            Public Recipes
+            Recipes
           </Link>
           {Auth.loggedIn() ? (
             <>
-              {/* <NavDropdown className="pe-3 ps-1 pt-2" title="Lists" id="basic-nav-dropdown">
-                  <NavDropdown.Item className="" href="/#/recipelist">
-                    Recipe List
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="/#/shoppinglist">Shopping List</NavDropdown.Item>
-                </NavDropdown> */}
-
-              <Link to="/recipelist" className="nav-link pe-3 pt-3">
-                Recipe List
-              </Link>
+              <NavDropdown className="pe-3 ps-1 pt-2" title="My Lists" id="basic-nav-dropdown">
+                <NavDropdown.Item className="" href="/recipelist">
+                  My Recipes
+                </NavDropdown.Item>
+                {/* <NavDropdown.Item href="/#/shoppinglist">Shopping List</NavDropdown.Item> */}
+              </NavDropdown>
               <Link to="/logout" className="nav-link pe-3 pt-3" onClick={() => Auth.logout()}>
                 Logout
               </Link>

@@ -67,7 +67,8 @@ export default function RecipeList({ setRecipeId }) {
   return (
     <div style={{ background: "#fef9ef" }} className="pt-4">
       <Container>
-        <h2 className="pt-3 border-bottom border-dark border-2">Recipe List</h2>
+        <h2 className="pt-3 border-bottom border-dark border-2">My Recipes</h2>
+        <div className="pt-1">Here are all the recipes you've added! If you want to share your recipes with others on the Recipes page, make sure to set the share setting as public.</div>
         {recipeList.length > 0 && (
           <Form className="pt-3 pb-3">
             <Form.Group>

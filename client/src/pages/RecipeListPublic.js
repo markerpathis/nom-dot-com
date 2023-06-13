@@ -66,7 +66,8 @@ export default function RecipeListPublic({ setRecipeId }) {
   return (
     <div style={{ background: "#fef9ef" }} className="pt-4">
       <Container>
-        <h2 className="pt-3 border-bottom border-dark border-2">Recipe List</h2>
+        <h2 className="pt-3 border-bottom border-dark border-2">Recipes</h2>
+        <div className="pt-1">Recipes in this list have been shared by other users.</div>
         {recipeList.length > 0 && (
           <Form className="pt-3 pb-3">
             <Form.Group>

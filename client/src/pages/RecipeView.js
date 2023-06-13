@@ -10,6 +10,7 @@ import Auth from "../utils/auth";
 
 export default function RecipeView() {
   const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [], author: "", public: "" });
+  const [authorData, setAuthorData] = useState({ firstName: "", lastName: "" });
   const recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
   const navigate = useNavigate();
 
@@ -36,12 +37,31 @@ export default function RecipeView() {
     }
   };
 
+  const getAuthor = async () => {
+    let authorApiUrl = "";
+    if (process.env.NODE_ENV === "production") {
+      authorApiUrl = `https://nomdotcom.herokuapp.com/api/users/${recipeData.author}`;
+    } else {
+      authorApiUrl = `http://localhost:3001/api/users/${recipeData.author}`;
+    }
+    try {
+      await axios.get(authorApiUrl).then((data) => {
+        setAuthorData({ firstName: data.data.firstName, lastName: data.data.lastName });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log("AUTHOR DATA: ", authorData);
+
   useEffect(() => {
     getRecipe();
   }, []);
 
   useEffect(() => {
     notPublicRedirect();
+    getAuthor();
   }, [recipeData]);
 
   const populateIngredientData = () => {
@@ -110,6 +130,9 @@ export default function RecipeView() {
           {/* title  */}
           <h2 className="pt-3 border-bottom border-dark border-2">{recipeData.recipeName}</h2>
 
+          <div>
+            Recipe added by {authorData.firstName} {authorData.lastName}
+          </div>
           {/* description */}
           <div className="pt-3 pb-3">{recipeData.recipeDesc}</div>
 
