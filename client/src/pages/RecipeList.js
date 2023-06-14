@@ -24,7 +24,7 @@ export default function RecipeList({ setRecipeId }) {
   };
 
   const getRecipes = () => {
-    console.log(userId);
+    // console.log(userId);
     let recipeApiUrl = "";
     if (process.env.NODE_ENV === "production") {
       recipeApiUrl = `https://nomdotcom.herokuapp.com/api/recipeCollection/${userId}`;
