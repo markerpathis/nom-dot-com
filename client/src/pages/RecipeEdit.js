@@ -217,21 +217,6 @@ export default function RecipeCreate() {
                 <h4>Cuisine</h4>
                 <Form.Select name="cuisine" value={recipeData.tagCuisine || ""} onChange={handleInputChange}>
                   <option value="">Select a cuisine</option>
-                  <option value="Appetizer">Appetizer</option>
-                  <option value="Cocktail">Cocktail</option>
-                  <option value="Dessert">Dessert</option>
-                  <option value="Drink">Drink</option>
-                  <option value="Entree">Entree</option>
-                  <option value="Side Dish">Side Dish</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col>
-              {" "}
-              <Form.Group className="my-1 pb-3">
-                <h4>Dish Type</h4>
-                <Form.Select name="dishType" value={recipeData.tagDishType || ""} onChange={handleInputChange}>
-                  <option value="">Select a dish type</option>
                   <option value="American">American</option>
                   <option value="British">British</option>
                   <option value="Chinese">Chinese</option>
@@ -241,6 +226,21 @@ export default function RecipeCreate() {
                   <option value="Korean">Korean</option>
                   <option value="Mexican">Mexican</option>
                   <option value="Thai">Thai</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col>
+              {" "}
+              <Form.Group className="my-1 pb-3">
+                <h4>Dish Type</h4>
+                <Form.Select name="dishType" value={recipeData.tagDishType || ""} onChange={handleInputChange}>
+                  <option value="">Select a cuisine</option>
+                  <option value="Appetizer">Appetizer</option>
+                  <option value="Cocktail">Cocktail</option>
+                  <option value="Dessert">Dessert</option>
+                  <option value="Drink">Drink</option>
+                  <option value="Entree">Entree</option>
+                  <option value="Side Dish">Side Dish</option>
                 </Form.Select>
               </Form.Group>
             </Col>
