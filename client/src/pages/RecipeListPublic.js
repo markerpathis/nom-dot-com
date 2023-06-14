@@ -52,10 +52,10 @@ export default function RecipeListPublic({ setRecipeId }) {
         return search === "" ? searchInput : searchInput.recipeName.toLowerCase().includes(search.toLocaleLowerCase());
       })
       .filter((searchInput) => {
-        return recipeFilters.filterCuisine === "" ? searchInput : searchInput.tagCuisine.includes(recipeFilters.filterCuisine);
+        return recipeFilters.filterCuisine === "" || recipeFilters.filterCuisine === "na" ? searchInput : searchInput.tagCuisine.includes(recipeFilters.filterCuisine);
       })
       .filter((searchInput) => {
-        return recipeFilters.filterDishType === "" ? searchInput : searchInput.tagDishType.includes(recipeFilters.filterDishType);
+        return recipeFilters.filterDishType === "" || recipeFilters.filterDishType === "na" ? searchInput : searchInput.tagDishType.includes(recipeFilters.filterDishType);
       })
       .map((recipe, index) => {
         return (

@@ -53,7 +53,7 @@ export default function RecipeView() {
     }
   };
 
-  console.log("AUTHOR DATA: ", authorData);
+  // console.log("AUTHOR DATA: ", authorData);
 
   useEffect(() => {
     getRecipe();
@@ -109,7 +109,7 @@ export default function RecipeView() {
     }
   };
 
-  console.log(recipeData);
+  // console.log(recipeData);
 
   const notPublicRedirect = () => {
     // Checks if recipe is private and user is not logged in
