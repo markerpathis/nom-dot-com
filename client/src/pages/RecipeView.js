@@ -7,9 +7,10 @@ import ButtonComp from "../components/ButtonComp";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Auth from "../utils/auth";
+import moment from "moment";
 
 export default function RecipeView() {
-  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [], author: "", public: "" });
+  const [recipeData, setRecipeData] = useState({ recipeName: "", recipeDesc: "", ingredients: [], recipeDirections: [], author: "", public: "", createdDate: "" });
   const [authorData, setAuthorData] = useState({ firstName: "", lastName: "" });
   const recipeId = window.location.toString().split("/")[window.location.toString().split("/").length - 1];
   const navigate = useNavigate();
@@ -30,12 +31,15 @@ export default function RecipeView() {
           recipeDirections: data.data.recipeDirections,
           author: data.data.author,
           public: data.data.public,
+          createdDate: moment.utc(data.data.createdDate).format("MM-DD-YYYY"),
         });
       });
     } catch (err) {
       console.log(err);
     }
   };
+
+  // console.log(recipeData);
 
   const getAuthor = async () => {
     let authorApiUrl = "";
@@ -109,8 +113,6 @@ export default function RecipeView() {
     }
   };
 
-  // console.log(recipeData);
-
   const notPublicRedirect = () => {
     // Checks if recipe is private and user is not logged in
     if (recipeData.public === false && Auth.loggedIn() === false) {
@@ -125,13 +127,13 @@ export default function RecipeView() {
 
   return (
     <div style={{ background: "#fef9ef" }} className="pt-4">
-      {recipeData ? (
+      {recipeData && authorData.firstName ? (
         <Container>
           {/* title  */}
           <h2 className="pt-3 border-bottom border-dark border-2">{recipeData.recipeName}</h2>
 
           <div>
-            Recipe added by {authorData.firstName} {authorData.lastName}
+            Recipe added by {authorData.firstName} {authorData.lastName} on {recipeData.createdDate}
           </div>
           {/* description */}
           <div className="pt-3 pb-3">{recipeData.recipeDesc}</div>

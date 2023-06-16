@@ -35,7 +35,7 @@ export default function SignUp() {
       signupApiUrl = "http://localhost:3001/api/users";
     }
     try {
-      console.log(signupApiUrl);
+      // console.log(signupApiUrl);
       await axios.post(signupApiUrl, {
         firstName: userData.firstName,
         lastName: userData.lastName,

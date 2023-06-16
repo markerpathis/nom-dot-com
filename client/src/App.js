@@ -15,10 +15,11 @@ import "./index.css";
 
 function App() {
   const [recipeId, setRecipeId] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState("");
 
   return (
     <Router>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/recipelist" element={<RecipeList setRecipeId={setRecipeId} />} />
@@ -31,7 +32,7 @@ function App() {
         <Route exact path="/shoppinglist" element={<ShoppingList />} />
         <Route exact path="/signup" element={<SignUp />} />
 
-        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
       </Routes>
     </Router>
   );

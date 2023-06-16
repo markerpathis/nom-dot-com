@@ -6,7 +6,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../assets/logo_horizontal.png";
 import Auth from "../utils/auth";
 
-export default function Header() {
+export default function Header({ isLoggedIn }) {
   return (
     <Navbar style={{ background: "#FFCB77" }} expand="lg">
       <Navbar.Brand className="m-2 ps-3 pe-3" href="/">
@@ -21,7 +21,7 @@ export default function Header() {
           <Link to="/publiclist" className="nav-link pe-3 pt-3">
             Recipes
           </Link>
-          {Auth.loggedIn() ? (
+          {isLoggedIn || Auth.loggedIn() ? (
             <>
               <NavDropdown className="pe-3 ps-1 pt-2" title="My Lists" id="basic-nav-dropdown">
                 <NavDropdown.Item className="" href="/recipelist">

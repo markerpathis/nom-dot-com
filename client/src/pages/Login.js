@@ -7,7 +7,7 @@ import ButtonComp from "../components/ButtonComp";
 import { useNavigate } from "react-router-dom";
 import Auth from "../utils/auth";
 
-export default function Login() {
+export default function Login({ setIsLoggedIn }) {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
 
@@ -23,7 +23,6 @@ export default function Login() {
   };
 
   const postLogin = async () => {
-    console.log(loginData);
     let loginApiUrl = "";
     if (process.env.NODE_ENV === "production") {
       loginApiUrl = "https://nomdotcom.herokuapp.com/api/users/login";
@@ -36,6 +35,7 @@ export default function Login() {
         password: loginData.password,
       });
       Auth.login(loginResponse.data.token);
+      setIsLoggedIn(1);
       navigate("/recipelist");
     } catch (err) {
       console.log(err);

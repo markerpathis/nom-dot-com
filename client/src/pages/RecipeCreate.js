@@ -22,7 +22,7 @@ export default function RecipeCreate() {
     tagDishType: "",
   });
   const navigate = useNavigate();
-  console.log(recipeData);
+  // console.log(recipeData);
 
   const authCheck = () => {
     if (Auth.loggedIn() === false) {
