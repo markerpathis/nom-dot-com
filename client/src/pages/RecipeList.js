@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import ButtonComp from "../components/ButtonComp";
 import { useNavigate } from "react-router-dom";
 import Auth from "../utils/auth";
+import RecipeCard from "../components/RecipeCard";
 
 export default function RecipeList({ setRecipeId }) {
   const [recipeList, setRecipeList] = useState([]);
@@ -49,13 +50,21 @@ export default function RecipeList({ setRecipeId }) {
   const populateRecipeData = () => {
     return recipeList
       .filter((searchInput) => {
-        return search === "" ? searchInput : searchInput.recipeName.toLowerCase().includes(search.toLocaleLowerCase());
+        return search === ""
+          ? searchInput
+          : searchInput.recipeName
+              .toLowerCase()
+              .includes(search.toLocaleLowerCase());
       })
       .map((recipe, index) => {
         return (
           <tr key={index}>
             <td>
-              <a className="text-dark" href={`/recipeview/${recipe._id}`} onClick={() => setRecipeId(recipe._id)}>
+              <a
+                className="text-dark"
+                href={`/recipeview/${recipe._id}`}
+                onClick={() => setRecipeId(recipe._id)}
+              >
                 {recipe.recipeName}
               </a>
             </td>
@@ -68,11 +77,19 @@ export default function RecipeList({ setRecipeId }) {
     <div style={{ background: "#fef9ef" }} className="pt-4">
       <Container>
         <h2 className="pt-3 border-bottom border-dark border-2">My Recipes</h2>
-        <div className="pt-1">Here are all the recipes you've added! If you want to share your recipes with others on the Recipes page, make sure to set the share setting as public.</div>
+        <div className="pt-1">
+          Here are all the recipes you've added! If you want to share your
+          recipes with others on the Recipes page, make sure to set the share
+          setting as public.
+        </div>
         {recipeList.length > 0 && (
           <Form className="pt-3 pb-3">
             <Form.Group>
-              <Form.Control onChange={(event) => setSearch(event.target.value)} type="text" placeholder="Search for a recipe" />
+              <Form.Control
+                onChange={(event) => setSearch(event.target.value)}
+                type="text"
+                placeholder="Search for a recipe"
+              />
             </Form.Group>
           </Form>
         )}
@@ -95,7 +112,10 @@ export default function RecipeList({ setRecipeId }) {
           </Table>
         )}
         <div className="d-grid gap-2">
-          <ButtonComp label={"Add Recipe"} handleClick={() => navigate("/recipecreate")}></ButtonComp>
+          <ButtonComp
+            label={"Add Recipe"}
+            handleClick={() => navigate("/recipecreate")}
+          ></ButtonComp>
         </div>
       </Container>
     </div>
